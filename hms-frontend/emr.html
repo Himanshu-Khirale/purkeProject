@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EMR / EHR | HMS SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-secondary-container":"#006374","on-primary":"#ffffff","surface-bright":"#f8fafb","surface-container-lowest":"#ffffff","surface-tint":"#0c56d0","error-container":"#ffdad6","error":"#ba1a1a","primary-fixed-dim":"#b2c5ff","surface-container-low":"#f2f4f5","on-secondary":"#ffffff","on-error-container":"#93000a","tertiary":"#7b2600","secondary-container":"#6ae1ff","surface-container":"#eceeef","secondary-fixed":"#adecff","primary-container":"#0052cc","surface-container-high":"#e6e8e9","on-surface":"#191c1d","tertiary-container":"#a33500","on-surface-variant":"#434654","surface":"#f8fafb","outline-variant":"#c3c6d6","surface-container-highest":"#e1e3e4","primary":"#003d9b","on-error":"#ffffff","primary-fixed":"#dae2ff","background":"#f8fafb","on-primary-container":"#c4d2ff","outline":"#737685","surface-dim":"#d8dadb","secondary-fixed-dim":"#5dd6f3","secondary":"#00687a","on-background":"#191c1d","tertiary-fixed":"#ffdbcf"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"fontFamily":{"headline":["Inter"],"body":["Inter"],"label":["Inter"]}}}}</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.signature-gradient{background:linear-gradient(135deg,#0052cc,#003d9b)}
+.sidebar-item{display:flex;align-items:center;gap:0.75rem;padding:0.625rem 1rem;border-radius:0.5rem;font-weight:500;font-size:0.875rem;color:#434654;transition:all 0.2s}
+.sidebar-item:hover{background:#f2f4f5;color:#191c1d}.sidebar-item.active{background:#dae2ff;color:#003d9b;font-weight:600}
+.tab{padding:0.5rem 1.25rem;border-radius:0.5rem;font-weight:500;font-size:0.875rem;color:#434654;cursor:pointer;transition:all 0.2s}
+.tab:hover{background:#f2f4f5}.tab.active{background:#dae2ff;color:#003d9b;font-weight:600}
+.vitals-card{background:#f2f4f5;border-radius:0.75rem;padding:1rem;text-align:center}
+.allergy-badge{background:#ffdad6;color:#93000a;padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.75rem;font-weight:600}
+.timeline-dot{width:12px;height:12px;border-radius:50%;border:2px solid #0052cc;background:white;position:absolute;left:-6px;top:4px}
+</style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex">
+<aside class="w-64 bg-surface-container-lowest h-screen sticky top-0 flex flex-col py-6 px-4 shrink-0">
+<div class="flex items-center gap-2 px-3 mb-8"><div class="w-9 h-9 signature-gradient rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1">medical_services</span></div><span class="text-lg font-bold tracking-tighter text-primary">HMS SaaS</span></div>
+<nav class="flex-1 space-y-1">
+<a href="dashboard.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">dashboard</span>Dashboard</a>
+<a href="patients.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">group</span>Patients</a>
+<a href="doctors.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">stethoscope</span>Doctors</a>
+<a href="appointments.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">calendar_month</span>Appointments</a>
+<a href="emr.html" class="sidebar-item active"><span class="material-symbols-outlined text-xl">description</span>EMR / EHR</a>
+<a href="billing.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">receipt_long</span>Billing</a>
+<a href="pharmacy.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">medication</span>Pharmacy</a>
+<a href="lab.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">biotech</span>Lab</a>
+<a href="inpatient.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">bed</span>Inpatient</a>
+<div class="my-4 border-t border-outline-variant/20"></div>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">bar_chart</span>Reports</a>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">settings</span>Settings</a>
+</nav>
+<div class="mt-auto px-3"><div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg"><div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-lg">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-on-surface truncate">User</p><p class="text-xs text-outline truncate">Medical Staff</p></div><a href="#" data-action="logout" class="text-outline hover:text-error"><span class="material-symbols-outlined text-lg">logout</span></a></div></div>
+</aside>
+<div class="flex-1 flex flex-col min-h-screen">
+<header class="h-16 bg-surface-container-lowest flex items-center justify-between px-8 sticky top-0 z-10">
+<div><h1 class="text-lg font-bold text-on-background tracking-tight">Electronic Medical Records</h1><p class="text-xs text-outline">Clinical documentation</p></div>
+<div class="flex items-center gap-3">
+<select id="patientSelect" class="h-9 w-64 px-3 bg-surface-container-low rounded-lg text-sm outline-none border-none focus:ring-2 focus:ring-secondary/20">
+<option value="">Select a patient...</option>
+</select>
+</div>
+</header>
+<main class="flex-1 p-8 bg-background">
+<div id="patientBanner" class="bg-surface-container-lowest rounded-xl p-6 mb-6">
+<div class="text-center py-10 text-outline"><p>Search for a patient to view their records.</p></div>
+</div>
+<div id="emrContent" class="hidden">
+<div class="flex gap-1 mb-6 bg-surface-container-low rounded-xl p-1 w-fit">
+<div class="tab active">Medical Records</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="space-y-0 relative">
+<h3 class="text-sm font-bold text-on-background uppercase tracking-wider mb-4">History</h3>
+<div id="recordTimeline" class="border-l-2 border-outline-variant/30 ml-1 space-y-6 pl-5">
+<!-- Timline content -->
+</div>
+</div>
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-surface-container-lowest rounded-xl p-6">
+<h3 class="text-sm font-bold text-on-background uppercase tracking-wider mb-4">Latest Vitals</h3>
+<div id="vitalsGrid" class="grid grid-cols-2 md:grid-cols-5 gap-3">
+<!-- Vitals content -->
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6">
+<h3 class="text-sm font-bold text-on-background uppercase tracking-wider mb-4">Add New Clinical Note</h3>
+<form id="recordForm" class="space-y-4">
+<input type="hidden" id="currentPatientId">
+
+<div class="grid grid-cols-2 gap-4">
+    <div class="space-y-1">
+        <label class="text-xs font-bold text-outline uppercase tracking-wider">Consulting Doctor <span class="text-error">*</span></label>
+        <select id="doctorId" required class="w-full h-10 px-4 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20">
+            <option value="">Select Doctor</option>
+        </select>
+    </div>
+    <div class="space-y-1">
+        <label class="text-xs font-bold text-outline uppercase tracking-wider">Record Date</label>
+        <input type="date" id="recordDate" class="w-full h-10 px-4 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20">
+    </div>
+</div>
+
+<div class="space-y-1">
+    <label class="text-xs font-bold text-outline uppercase tracking-wider">Chief Complaint <span class="text-error">*</span></label>
+    <input type="text" id="chiefComplaint" placeholder="e.g. Fever for 3 days, cough" required class="w-full h-10 px-4 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20">
+</div>
+
+<div class="space-y-1">
+    <label class="text-xs font-bold text-outline uppercase tracking-wider">Diagnosis & Assessment <span class="text-error">*</span></label>
+    <textarea id="assessment" rows="2" placeholder="Diagnosis & Assessment" required class="w-full px-4 py-2 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20 resize-none"></textarea>
+</div>
+
+<div class="space-y-1">
+    <label class="text-xs font-bold text-outline uppercase tracking-wider">Treatment Plan</label>
+    <textarea id="plan" rows="2" placeholder="Medications, procedures, lifestyle advice" class="w-full px-4 py-2 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20 resize-none"></textarea>
+</div>
+
+<!-- Vitals -->
+<div>
+    <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-secondary text-lg">monitor_heart</span><label class="text-xs font-bold text-on-background uppercase tracking-wider">Vitals</label></div>
+    <div class="grid grid-cols-3 gap-3">
+        <div class="space-y-1">
+            <label class="text-xs text-outline">BP Systolic</label>
+            <input type="number" id="vBpSys" min="60" max="250" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="120">
+        </div>
+        <div class="space-y-1">
+            <label class="text-xs text-outline">BP Diastolic</label>
+            <input type="number" id="vBpDia" min="40" max="160" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="80">
+        </div>
+        <div class="space-y-1">
+            <label class="text-xs text-outline">Pulse (bpm)</label>
+            <input type="number" id="vPulse" min="30" max="200" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="72">
+        </div>
+        <div class="space-y-1">
+            <label class="text-xs text-outline">Temperature (°F)</label>
+            <input type="number" id="vTemp" min="90" max="110" step="0.1" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="98.6">
+        </div>
+        <div class="space-y-1">
+            <label class="text-xs text-outline">SpO₂ (%)</label>
+            <input type="number" id="vSpO2" min="50" max="100" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="98">
+        </div>
+        <div class="space-y-1">
+            <label class="text-xs text-outline">Resp Rate</label>
+            <input type="number" id="vResp" min="8" max="50" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="16">
+        </div>
+        <div class="space-y-1">
+            <label class="text-xs text-outline">Weight (kg)</label>
+            <input type="number" id="vWeight" min="1" max="300" step="0.1" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="70">
+        </div>
+        <div class="space-y-1">
+            <label class="text-xs text-outline">Height (cm)</label>
+            <input type="number" id="vHeight" min="30" max="250" class="w-full h-9 px-3 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20" placeholder="170">
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-2 gap-4">
+    <div class="space-y-1">
+        <label class="text-xs font-bold text-outline uppercase tracking-wider">Follow-up Date</label>
+        <input type="date" id="followUpDate" class="w-full h-10 px-4 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20">
+    </div>
+    <div class="space-y-1">
+        <label class="text-xs font-bold text-outline uppercase tracking-wider">Status</label>
+        <select id="recordStatus" class="w-full h-10 px-4 bg-surface-container-low rounded-lg text-sm outline-none border border-outline-variant/20">
+            <option value="draft">Draft</option>
+            <option value="finalized">Finalized</option>
+            <option value="amended">Amended</option>
+        </select>
+    </div>
+</div>
+
+<button type="submit" class="w-full h-10 signature-gradient text-white rounded-xl text-sm font-bold hover:brightness-110">Save Clinical Record</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="js/supabase-client.js"></script>
+<script src="js/api.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!HMS.requireAuth()) return;
+    HMS.initSidebar();
+    
+    const user = HMS.getUser();
+    if (user && user.tenantName) document.querySelector('header h1').textContent = user.tenantName;
+
+    // Set default record date
+    document.getElementById('recordDate').value = new Date().toISOString().split('T')[0];
+
+    try {
+        const patients = await HMS.loadPatients();
+        const pSel = document.getElementById('patientSelect');
+        patients.forEach(p => { const o = document.createElement('option'); o.value = p.id; o.textContent = p.name; pSel.appendChild(o); });
+    } catch(e) {}
+
+    try {
+        const doctors = await HMS.loadDoctors();
+        const dSel = document.getElementById('doctorId');
+        doctors.forEach(d => { const o = document.createElement('option'); o.value = d.id; o.textContent = d.name; dSel.appendChild(o); });
+    } catch(e) {}
+
+    document.getElementById('patientSelect').addEventListener('change', async (e) => {
+        if (e.target.value) loadPatientEMR(e.target.value);
+    });
+
+    document.getElementById('recordForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const patientId = document.getElementById('currentPatientId').value;
+        
+        // Build vitals JSON
+        const vitals = {};
+        const bpSys = document.getElementById('vBpSys').value;
+        const bpDia = document.getElementById('vBpDia').value;
+        if (bpSys) vitals.bp_systolic = parseInt(bpSys);
+        if (bpDia) vitals.bp_diastolic = parseInt(bpDia);
+        if (document.getElementById('vPulse').value) vitals.pulse = parseInt(document.getElementById('vPulse').value);
+        if (document.getElementById('vTemp').value) vitals.temperature = parseFloat(document.getElementById('vTemp').value);
+        if (document.getElementById('vSpO2').value) vitals.spo2 = parseInt(document.getElementById('vSpO2').value);
+        if (document.getElementById('vResp').value) vitals.respiratory_rate = parseInt(document.getElementById('vResp').value);
+        if (document.getElementById('vWeight').value) vitals.weight = parseFloat(document.getElementById('vWeight').value);
+        if (document.getElementById('vHeight').value) vitals.height = parseInt(document.getElementById('vHeight').value);
+        
+        const data = {
+            patientId,
+            doctorId: document.getElementById('doctorId').value,
+            chiefComplaint: document.getElementById('chiefComplaint').value,
+            diagnosis: document.getElementById('assessment').value,
+            treatmentPlan: document.getElementById('plan').value,
+            recordDate: document.getElementById('recordDate').value || new Date().toISOString().split('T')[0],
+            vitals: Object.keys(vitals).length > 0 ? vitals : null,
+            followUpDate: document.getElementById('followUpDate').value || null,
+            status: document.getElementById('recordStatus').value
+        };
+        try {
+            await HMS.post('/emr/records', data);
+            alert('Record saved!');
+            document.getElementById('recordForm').reset();
+            document.getElementById('currentPatientId').value = patientId;
+            document.getElementById('recordDate').value = new Date().toISOString().split('T')[0];
+            loadRecords(patientId);
+        } catch(err) { alert(err.message); }
+    });
+});
+
+let currentRecords = [];
+
+async function loadPatientEMR(patientId) {
+    try {
+        const res = await HMS.getOne('patients', patientId);
+        if (!res || !res.data) { alert('Patient not found'); return; }
+        const p = res.data;
+        document.getElementById('currentPatientId').value = p.id;
+        document.getElementById('emrContent').classList.remove('hidden');
+        
+        const ini = HMS.initials(p.firstName, p.lastName);
+        const age = p.dateOfBirth ? Math.floor((Date.now() - new Date(p.dateOfBirth)) / 31557600000) : '—';
+        
+        document.getElementById('patientBanner').innerHTML = `
+            <div class="flex items-start gap-6">
+                <div class="w-16 h-16 rounded-2xl bg-primary-fixed flex items-center justify-center"><span class="text-2xl font-extrabold text-primary">${ini}</span></div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-1"><h2 class="text-xl font-extrabold text-on-background tracking-tight">${p.firstName} ${p.lastName}</h2><span class="text-xs font-medium text-outline bg-surface-container-low px-2 py-0.5 rounded-full">${p.mrn}</span></div>
+                    <div class="text-sm text-on-surface-variant">${age} years, ${p.gender} • Blood Group: ${p.bloodGroup || '—'} • ${p.phone}</div>
+                </div>
+                <button onclick="resetEMRForm()" class="h-9 px-4 bg-primary text-white rounded-lg text-xs font-bold hover:brightness-110 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">add</span> New Note
+                </button>
+            </div>`;
+        loadRecords(p.id);
+    } catch(err) { console.error(err); }
+}
+
+function resetEMRForm() {
+    document.getElementById('recordForm').reset();
+    document.getElementById('recordDate').value = new Date().toISOString().split('T')[0];
+    document.querySelector('#recordForm h3').textContent = 'Add New Clinical Note';
+}
+
+function viewRecord(index) {
+    const r = currentRecords[index];
+    if (!r) return;
+    
+    document.querySelector('#recordForm h3').textContent = 'Viewing Clinical Note - ' + HMS.formatDate(r.recordDate);
+    document.getElementById('doctorId').value = r.doctorId;
+    document.getElementById('recordDate').value = r.recordDate;
+    document.getElementById('chiefComplaint').value = r.chiefComplaint;
+    document.getElementById('assessment').value = r.diagnosis;
+    document.getElementById('plan').value = r.treatmentPlan || '';
+    document.getElementById('recordStatus').value = r.status;
+    
+    // Clear vitals first
+    ['vBpSys', 'vBpDia', 'vPulse', 'vTemp', 'vSpO2', 'vResp', 'vWeight', 'vHeight'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+    
+    if (r.vitals) {
+        if (r.vitals.bp_systolic) document.getElementById('vBpSys').value = r.vitals.bp_systolic;
+        if (r.vitals.bp_diastolic) document.getElementById('vBpDia').value = r.vitals.bp_diastolic;
+        if (r.vitals.pulse) document.getElementById('vPulse').value = r.vitals.pulse;
+        if (r.vitals.temperature) document.getElementById('vTemp').value = r.vitals.temperature;
+        if (r.vitals.spo2) document.getElementById('vSpO2').value = r.vitals.spo2;
+        if (r.vitals.respiratory_rate) document.getElementById('vResp').value = r.vitals.respiratory_rate;
+        if (r.vitals.weight) document.getElementById('vWeight').value = r.vitals.weight;
+        if (r.vitals.height) document.getElementById('vHeight').value = r.vitals.height;
+    }
+}
+
+async function loadRecords(patientId) {
+    try {
+        const res = await HMS.get(`/emr/patients/${patientId}/records`);
+        const timeline = document.getElementById('recordTimeline');
+        const vitalsGrid = document.getElementById('vitalsGrid');
+        
+        if (!res || !res.data || res.data.length === 0) {
+            timeline.innerHTML = '<p class="text-sm text-outline">No records found.</p>';
+            vitalsGrid.innerHTML = '<p class="text-xs text-outline col-span-full text-center">No vitals recorded.</p>';
+            currentRecords = [];
+            return;
+        }
+        
+        currentRecords = res.data;
+        
+        // Render Timeline
+        timeline.innerHTML = res.data.map((r, i) => `
+            <div onclick="viewRecord(${i})" class="relative cursor-pointer hover:bg-surface-container p-2 -m-2 rounded-lg transition-colors group">
+                <div class="timeline-dot group-hover:scale-125 transition-transform"></div>
+                <p class="text-xs font-bold text-primary">${HMS.formatDate(r.recordDate || r.createdAt)}</p>
+                <p class="text-sm font-bold text-on-background mt-0.5">${r.chiefComplaint || 'Clinical Note'}</p>
+                <p class="text-xs text-on-surface-variant mt-0.5 truncate">${r.diagnosis || ''}</p>
+            </div>`).join('');
+            
+        // Render Vitals from latest record
+        const latestWithVitals = res.data.find(r => r.vitals && Object.keys(r.vitals).length > 0);
+        if (latestWithVitals) {
+            const v = latestWithVitals.vitals;
+            vitalsGrid.innerHTML = `
+                <div class="vitals-card">
+                    <p class="text-[10px] uppercase font-bold text-outline mb-1">BP</p>
+                    <p class="text-sm font-extrabold text-on-surface">${v.bp_systolic || '--'}/${v.bp_diastolic || '--'}</p>
+                    <p class="text-[10px] text-outline mt-1">mmHg</p>
+                </div>
+                <div class="vitals-card">
+                    <p class="text-[10px] uppercase font-bold text-outline mb-1">Pulse</p>
+                    <p class="text-sm font-extrabold text-on-surface">${v.pulse || '--'}</p>
+                    <p class="text-[10px] text-outline mt-1">bpm</p>
+                </div>
+                <div class="vitals-card">
+                    <p class="text-[10px] uppercase font-bold text-outline mb-1">Temp</p>
+                    <p class="text-sm font-extrabold text-on-surface">${v.temperature || '--'}°F</p>
+                </div>
+                <div class="vitals-card">
+                    <p class="text-[10px] uppercase font-bold text-outline mb-1">SpO2</p>
+                    <p class="text-sm font-extrabold text-on-surface">${v.spo2 || '--'}%</p>
+                </div>
+                <div class="vitals-card">
+                    <p class="text-[10px] uppercase font-bold text-outline mb-1">Weight</p>
+                    <p class="text-sm font-extrabold text-on-surface">${v.weight || '--'} kg</p>
+                </div>`;
+        } else {
+            vitalsGrid.innerHTML = '<p class="text-xs text-outline col-span-full text-center">No vitals recorded.</p>';
+        }
+    } catch(e) { console.error(e); }
+}
+</script>
+</body></html>

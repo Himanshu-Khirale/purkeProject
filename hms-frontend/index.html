@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HMS SaaS | Redirecting...</title>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Check if user is logged in
+        if (HMS.isLoggedIn()) {
+            window.location.href = 'dashboard.html';
+        } else {
+            window.location.href = 'login.html';
+        }
+    </script>
+</head>
+<body>
+    <p style="font-family: sans-serif; text-align: center; margin-top: 50px; color: #666;">
+        Redirecting to HMS SaaS...
+    </p>
+</body>
+</html>

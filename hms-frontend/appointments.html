@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Appointments | HMS SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-secondary-container":"#006374","on-primary":"#ffffff","surface-bright":"#f8fafb","surface-container-lowest":"#ffffff","surface-tint":"#0c56d0","error-container":"#ffdad6","error":"#ba1a1a","primary-fixed-dim":"#b2c5ff","surface-container-low":"#f2f4f5","on-secondary":"#ffffff","on-error-container":"#93000a","tertiary":"#7b2600","secondary-container":"#6ae1ff","surface-container":"#eceeef","secondary-fixed":"#adecff","primary-container":"#0052cc","surface-container-high":"#e6e8e9","on-surface":"#191c1d","tertiary-container":"#a33500","on-surface-variant":"#434654","surface":"#f8fafb","outline-variant":"#c3c6d6","surface-container-highest":"#e1e3e4","primary":"#003d9b","on-error":"#ffffff","primary-fixed":"#dae2ff","background":"#f8fafb","on-primary-container":"#c4d2ff","outline":"#737685","surface-dim":"#d8dadb","secondary-fixed-dim":"#5dd6f3","secondary":"#00687a","on-background":"#191c1d","tertiary-fixed":"#ffdbcf"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"fontFamily":{"headline":["Inter"],"body":["Inter"],"label":["Inter"]}}}}</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.signature-gradient{background:linear-gradient(135deg,#0052cc,#003d9b)}
+.sidebar-item{display:flex;align-items:center;gap:0.75rem;padding:0.625rem 1rem;border-radius:0.5rem;font-weight:500;font-size:0.875rem;color:#434654;transition:all 0.2s}
+.sidebar-item:hover{background:#f2f4f5;color:#191c1d}.sidebar-item.active{background:#dae2ff;color:#003d9b;font-weight:600}
+.status-badge{padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.75rem;font-weight:600}
+.status-scheduled{background:#dae2ff;color:#003d9b}.status-inprogress{background:#adecff;color:#004e5d}
+.status-completed{background:#d1fae5;color:#065f46}.status-cancelled{background:#ffdad6;color:#93000a}
+.status-waiting{background:#fef3c7;color:#92400e}
+</style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex">
+<aside class="w-64 bg-surface-container-lowest h-screen sticky top-0 flex flex-col py-6 px-4 shrink-0">
+<div class="flex items-center gap-2 px-3 mb-8"><div class="w-9 h-9 signature-gradient rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1">medical_services</span></div><span class="text-lg font-bold tracking-tighter text-primary">HMS SaaS</span></div>
+<nav class="flex-1 space-y-1">
+<a href="dashboard.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">dashboard</span>Dashboard</a>
+<a href="patients.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">group</span>Patients</a>
+<a href="doctors.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">stethoscope</span>Doctors</a>
+<a href="appointments.html" class="sidebar-item active"><span class="material-symbols-outlined text-xl">calendar_month</span>Appointments</a>
+<a href="emr.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">description</span>EMR / EHR</a>
+<a href="billing.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">receipt_long</span>Billing</a>
+<a href="pharmacy.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">medication</span>Pharmacy</a>
+<a href="lab.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">biotech</span>Lab</a>
+<a href="inpatient.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">bed</span>Inpatient</a>
+<div class="my-4 border-t border-outline-variant/20"></div>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">bar_chart</span>Reports</a>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">settings</span>Settings</a>
+</nav>
+<div class="mt-auto px-3"><div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg"><div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-lg">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-on-surface truncate">User</p><p class="text-xs text-outline truncate">Medical Staff</p></div><a href="#" data-action="logout" class="text-outline hover:text-error"><span class="material-symbols-outlined text-lg">logout</span></a></div></div>
+</aside>
+<div class="flex-1 flex flex-col min-h-screen">
+<header class="h-16 bg-surface-container-lowest flex items-center justify-between px-8 sticky top-0 z-10">
+<div><h1 class="text-lg font-bold text-on-background tracking-tight">Appointments</h1><p class="text-xs text-outline">Schedule and manage visits</p></div>
+<div class="flex items-center gap-4">
+<button onclick="loadAppointments()" class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined">refresh</span></button>
+</div>
+</header>
+<main class="flex-1 p-8 bg-background">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-surface-container-lowest rounded-xl p-6">
+<h3 class="text-base font-bold text-on-background mb-4">Upcoming Appointments</h3>
+<div id="appointmentList" class="space-y-2">
+<!-- Dynamic Content -->
+<div class="py-10 text-center text-outline"><span class="material-symbols-outlined animate-spin">progress_activity</span><p>Loading appointments...</p></div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6">
+<h3 class="text-base font-bold text-on-background mb-6">Book Appointment</h3>
+<form id="bookForm" class="space-y-4">
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">Patient <span class="text-error">*</span></label>
+<select id="patientId" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+<option value="">Select a patient</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">Doctor <span class="text-error">*</span></label>
+<select id="doctorId" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+<option value="">Select a doctor</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">Appointment Type <span class="text-error">*</span></label>
+<select id="apptType" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+<option value="consultation">Consultation</option>
+<option value="follow_up">Follow-up</option>
+<option value="procedure">Procedure</option>
+<option value="check_up">Check-up</option>
+<option value="emergency">Emergency</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">Appointment Date <span class="text-error">*</span></label>
+<input type="date" id="apptDate" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">Start Time <span class="text-error">*</span></label>
+<input type="time" id="apptStartTime" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">End Time</label>
+<input type="time" id="apptEndTime" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">Reason for Visit</label>
+<textarea id="apptReason" rows="2" class="w-full px-3 py-2 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm resize-none" placeholder="Describe the reason for appointment"></textarea>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-outline uppercase tracking-wider">Notes</label>
+<input type="text" id="apptNotes" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm" placeholder="Additional notes">
+</div>
+<button type="submit" class="w-full h-12 signature-gradient text-white font-bold rounded-xl shadow-lg hover:brightness-110 mt-4 flex items-center justify-center gap-2 italic">Book Visit</button>
+</form>
+</div>
+</div>
+</main>
+</div>
+<script src="js/supabase-client.js"></script>
+<script src="js/api.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!HMS.requireAuth()) return;
+    HMS.initSidebar();
+    
+    const user = HMS.getUser();
+    if (user && user.tenantName) document.querySelector('header h1').textContent = user.tenantName;
+
+    loadAppointments();
+
+    try {
+        const patients = await HMS.loadPatients();
+        const pSel = document.getElementById('patientId');
+        patients.forEach(p => { const o = document.createElement('option'); o.value = p.id; o.textContent = p.name; pSel.appendChild(o); });
+    } catch(e) {}
+
+    try {
+        const doctors = await HMS.loadDoctors();
+        const dSel = document.getElementById('doctorId');
+        doctors.forEach(d => { const o = document.createElement('option'); o.value = d.id; o.textContent = d.name; dSel.appendChild(o); });
+    } catch(e) {}
+
+    document.getElementById('bookForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const data = {
+            patientId: document.getElementById('patientId').value,
+            doctorId: document.getElementById('doctorId').value,
+            appointmentDate: document.getElementById('apptDate').value,
+            startTime: document.getElementById('apptStartTime').value,
+            endTime: document.getElementById('apptEndTime').value || null,
+            type: document.getElementById('apptType').value,
+            reason: document.getElementById('apptReason').value,
+            notes: document.getElementById('apptNotes').value,
+            status: 'scheduled'
+        };
+        try {
+            await HMS.post('/appointments', data);
+            alert('Appointment booked!');
+            document.getElementById('bookForm').reset();
+            loadAppointments();
+        } catch(err) { alert(err.message); }
+    });
+});
+
+async function loadAppointments() {
+    try {
+        const res = await HMS.get('/appointments', { page: 0, size: 50 });
+        const list = document.getElementById('appointmentList');
+        if (!res || !res.data || res.data.content.length === 0) {
+            list.innerHTML = '<div class="py-10 text-center text-outline">No appointments found.</div>';
+            return;
+        }
+        list.innerHTML = res.data.content.map(a => {
+            const st = (a.status || 'scheduled').toLowerCase();
+            const statusColors = {
+                scheduled: 'status-scheduled', confirmed: 'status-scheduled',
+                checked_in: 'status-waiting', in_progress: 'status-inprogress',
+                completed: 'status-completed', cancelled: 'status-cancelled', no_show: 'status-cancelled'
+            };
+            const badge = statusColors[st] || 'status-scheduled';
+            const date = a.appointmentDate ? new Date(a.appointmentDate).toLocaleDateString('en-IN', { day:'2-digit', month:'short'}) : '—';
+            const isFinal = ['completed','cancelled','no_show'].includes(st);
+
+            const actions = isFinal ? `<span class="text-xs text-outline italic px-2">${st.replace('_',' ')}</span>` : `
+                <select onchange="updateStatus('${a.id}', this.value); this.value=''" class="h-8 px-2 text-xs bg-primary text-white rounded-lg border-none outline-none cursor-pointer font-semibold">
+                    <option value="">Update ▾</option>
+                    ${st === 'scheduled' ? '<option value="confirmed">✓ Confirm</option>' : ''}
+                    ${['scheduled','confirmed'].includes(st) ? '<option value="checked_in">→ Check In</option>' : ''}
+                    ${['confirmed','checked_in'].includes(st) ? '<option value="in_progress">▶ Start Visit</option>' : ''}
+                    ${st === 'in_progress' ? '<option value="completed">✔ Complete</option>' : ''}
+                    <option value="no_show">✗ No Show</option>
+                    <option value="cancelled">✕ Cancel</option>
+                </select>`;
+
+            return `<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg border border-outline-variant/10">
+                <div class="w-1 h-12 rounded-full bg-primary shrink-0"></div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-xs font-bold text-primary">${date} at ${a.startTime || '—'}</p>
+                    <p class="text-sm font-semibold text-on-background truncate">${a.patientName || 'Patient'}</p>
+                    <p class="text-xs text-outline">${a.doctorName || ''}${a.type ? ' · ' + a.type.replace('_',' ') : ''}</p>
+                </div>
+                <span class="status-badge ${badge} text-xs shrink-0">${st.replace('_',' ')}</span>
+                ${actions}
+            </div>`;
+        }).join('');
+    } catch(e) { console.error(e); }
+}
+
+async function updateStatus(id, status) {
+    if (!status) return;
+    try {
+        await HMS.updateAppointmentStatus(id, status);
+        loadAppointments();
+    } catch(e) { alert(e.message); }
+}
+
+async function cancelAppt(id) {
+    if (confirm('Cancel this appointment?')) {
+        try { await HMS.updateAppointmentStatus(id, 'cancelled'); loadAppointments(); } catch(e) { alert(e.message); }
+    }
+}
+</script>
+</body></html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Billing | HMS SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-secondary-container":"#006374","on-primary":"#ffffff","surface-bright":"#f8fafb","surface-container-lowest":"#ffffff","surface-tint":"#0c56d0","error-container":"#ffdad6","error":"#ba1a1a","primary-fixed-dim":"#b2c5ff","surface-container-low":"#f2f4f5","on-secondary":"#ffffff","on-error-container":"#93000a","tertiary":"#7b2600","secondary-container":"#6ae1ff","surface-container":"#eceeef","secondary-fixed":"#adecff","primary-container":"#0052cc","surface-container-high":"#e6e8e9","on-surface":"#191c1d","tertiary-container":"#a33500","on-surface-variant":"#434654","surface":"#f8fafb","outline-variant":"#c3c6d6","surface-container-highest":"#e1e3e4","primary":"#003d9b","on-error":"#ffffff","primary-fixed":"#dae2ff","background":"#f8fafb","on-primary-container":"#c4d2ff","outline":"#737685","surface-dim":"#d8dadb","secondary-fixed-dim":"#5dd6f3","secondary":"#00687a","on-background":"#191c1d","tertiary-fixed":"#ffdbcf"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"fontFamily":{"headline":["Inter"],"body":["Inter"],"label":["Inter"]}}}}</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.signature-gradient{background:linear-gradient(135deg,#0052cc,#003d9b)}
+.sidebar-item{display:flex;align-items:center;gap:0.75rem;padding:0.625rem 1rem;border-radius:0.5rem;font-weight:500;font-size:0.875rem;color:#434654;transition:all 0.2s}
+.sidebar-item:hover{background:#f2f4f5;color:#191c1d}.sidebar-item.active{background:#dae2ff;color:#003d9b;font-weight:600}
+.kpi-card{background:#ffffff;border-radius:0.75rem;padding:1.5rem;border:1px solid rgba(195,198,214,0.1)}
+.inv-paid{background:#d1fae5;color:#065f46}.inv-partial{background:#fef3c7;color:#92400e}.inv-overdue{background:#ffdad6;color:#93000a}.inv-draft{background:#e6e8e9;color:#434654}
+</style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex">
+<aside class="w-64 bg-surface-container-lowest h-screen sticky top-0 flex flex-col py-6 px-4 shrink-0">
+<div class="flex items-center gap-2 px-3 mb-8"><div class="w-9 h-9 signature-gradient rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1">medical_services</span></div><span class="text-lg font-bold tracking-tighter text-primary">HMS SaaS</span></div>
+<nav class="flex-1 space-y-1">
+<a href="dashboard.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">dashboard</span>Dashboard</a>
+<a href="patients.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">group</span>Patients</a>
+<a href="doctors.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">stethoscope</span>Doctors</a>
+<a href="appointments.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">calendar_month</span>Appointments</a>
+<a href="emr.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">description</span>EMR / EHR</a>
+<a href="billing.html" class="sidebar-item active"><span class="material-symbols-outlined text-xl">receipt_long</span>Billing</a>
+<a href="pharmacy.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">medication</span>Pharmacy</a>
+<a href="lab.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">biotech</span>Lab</a>
+<a href="inpatient.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">bed</span>Inpatient</a>
+<div class="my-4 border-t border-outline-variant/20"></div>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">bar_chart</span>Reports</a>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">settings</span>Settings</a>
+</nav>
+<div class="mt-auto px-3"><div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg"><div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-lg">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-on-surface truncate">User</p><p class="text-xs text-outline truncate">Medical Staff</p></div><a href="#" data-action="logout" class="text-outline hover:text-error"><span class="material-symbols-outlined text-lg">logout</span></a></div></div>
+</aside>
+<div class="flex-1 flex flex-col min-h-screen">
+<header class="h-16 bg-surface-container-lowest flex items-center justify-between px-8 sticky top-0 z-10">
+<div><h1 class="text-lg font-bold text-on-background tracking-tight">Billing & Invoices</h1><p class="text-xs text-outline">Revenue management</p></div>
+<div class="flex items-center gap-3">
+<button onclick="openInvoiceModal()" class="h-9 px-4 signature-gradient text-white font-bold rounded-xl hover:brightness-110 text-sm flex items-center gap-1.5"><span class="material-symbols-outlined text-lg">add_notes</span>Create Invoice</button>
+</div>
+</header>
+<main class="flex-1 p-8 bg-background space-y-6">
+<section class="grid grid-cols-1 md:grid-cols-4 gap-5">
+<div class="kpi-card"><p class="text-sm font-medium text-outline mb-1">Total Revenue</p><p id="totalRevenue" class="text-2xl font-extrabold text-on-background tracking-tight">₹0</p></div>
+<div class="kpi-card"><p class="text-sm font-medium text-outline mb-1">Collected</p><p id="collectedAmount" class="text-2xl font-extrabold text-on-background tracking-tight">₹0</p></div>
+<div class="kpi-card"><p class="text-sm font-medium text-outline mb-1">Pending</p><p id="pendingAmount" class="text-2xl font-extrabold text-on-background tracking-tight">₹0</p></div>
+<div class="kpi-card"><p class="text-sm font-medium text-outline mb-1">Overdue Count</p><p id="overdueCount" class="text-2xl font-extrabold text-on-background tracking-tight">0</p></div>
+</section>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10 shadow-sm">
+<table class="w-full">
+<thead><tr class="bg-surface-container-low/50">
+<th class="text-left py-3.5 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Invoice #</th>
+<th class="text-left py-3.5 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Patient</th>
+<th class="text-left py-3.5 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Date</th>
+<th class="text-right py-3.5 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Total</th>
+<th class="text-right py-3.5 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Paid</th>
+<th class="text-left py-3.5 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Status</th>
+<th class="text-left py-3.5 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Actions</th>
+</tr></thead>
+<tbody id="invoiceTableBody" class="divide-y divide-outline-variant/10">
+<tr><td colspan="7" class="py-10 text-center"><span class="material-symbols-outlined animate-spin text-primary">progress_activity</span></td></tr>
+</tbody></table>
+</div>
+</main>
+</div>
+
+<!-- Invoice Modal -->
+<div id="invoiceModal" class="hidden fixed inset-0 z-50 bg-on-surface/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest rounded-2xl w-full max-w-2xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div class="px-6 py-4 border-b border-outline-variant/10 flex items-center justify-between shrink-0">
+            <h3 class="text-xl font-bold">Create Invoice</h3>
+            <button onclick="closeInvoiceModal()" class="p-2 hover:bg-surface-container-low rounded-full text-outline hover:text-error"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <form id="invoiceForm" class="p-6 space-y-5 overflow-y-auto flex-1">
+
+            <!-- Patient & Dates -->
+            <div>
+                <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-primary text-lg">person</span><h4 class="text-sm font-bold text-on-background uppercase tracking-wider">Patient & Dates</h4></div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-outline uppercase tracking-wider">Patient <span class="text-error">*</span></label>
+                    <select id="patientId" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+                        <option value="">Select a patient</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-3">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Invoice Date <span class="text-error">*</span></label>
+                        <input type="date" id="invoiceDate" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Due Date</label>
+                        <input type="date" id="dueDate" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-outline-variant/15">
+
+            <!-- Amount Breakdown -->
+            <div>
+                <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-secondary text-lg">payments</span><h4 class="text-sm font-bold text-on-background uppercase tracking-wider">Amount Breakdown</h4></div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Subtotal (₹)</label>
+                        <input type="number" id="subtotal" min="0" step="0.01" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm" placeholder="0.00">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Tax (₹)</label>
+                        <input type="number" id="taxAmount" min="0" step="0.01" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm" placeholder="0.00">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Discount (₹)</label>
+                        <input type="number" id="discountAmount" min="0" step="0.01" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-3">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Total Amount (₹) <span class="text-error">*</span></label>
+                        <input type="number" id="amount" min="0" step="0.01" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm font-bold" placeholder="0.00">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Amount Paid (₹) <span class="text-error">*</span></label>
+                        <input type="number" id="paid" min="0" step="0.01" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm" placeholder="0.00">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-outline-variant/15">
+
+            <!-- Status & Notes -->
+            <div>
+                <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-tertiary text-lg">info</span><h4 class="text-sm font-bold text-on-background uppercase tracking-wider">Status & Notes</h4></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Payment Status</label>
+                        <select id="status" class="w-full h-10 px-3 bg-surface-container-low rounded-lg border border-outline-variant/20 text-sm">
+                            <option value="draft">Draft</option>
+                            <option value="sent">Sent</option>
+                            <option value="paid">Paid</option>
+                            <option value="partially_paid">Partially Paid</option>
+                            <option value="overdue">Overdue</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Notes</label>
+                        <input type="text" id="invoiceNotes" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm" placeholder="Payment notes">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2 sticky bottom-0 bg-surface-container-lowest pb-1">
+                <button type="button" onclick="closeInvoiceModal()" class="h-10 px-6 font-bold text-outline hover:bg-surface-container-low rounded-xl">Cancel</button>
+                <button type="submit" class="h-10 px-8 signature-gradient text-white font-bold rounded-xl shadow-lg hover:brightness-110">Generate Invoice</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/api.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!HMS.requireAuth()) return;
+    HMS.initSidebar();
+    
+    const user = HMS.getUser();
+    if (user && user.tenantName) document.querySelector('header h1').textContent = user.tenantName;
+
+    // Set default invoice date
+    document.getElementById('invoiceDate').value = new Date().toISOString().split('T')[0];
+
+    loadStats();
+    loadInvoices();
+
+    try {
+        const patients = await HMS.loadPatients();
+        const pSel = document.getElementById('patientId');
+        patients.forEach(p => { const o = document.createElement('option'); o.value = p.id; o.textContent = p.name; pSel.appendChild(o); });
+    } catch(e) {}
+
+    // Auto-calculate total from subtotal + tax - discount
+    ['subtotal','taxAmount','discountAmount'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+            const sub = parseFloat(document.getElementById('subtotal').value) || 0;
+            const tax = parseFloat(document.getElementById('taxAmount').value) || 0;
+            const disc = parseFloat(document.getElementById('discountAmount').value) || 0;
+            document.getElementById('amount').value = (sub + tax - disc).toFixed(2);
+        });
+    });
+
+    document.getElementById('invoiceForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const data = {
+            patientId: document.getElementById('patientId').value,
+            invoiceDate: document.getElementById('invoiceDate').value,
+            dueDate: document.getElementById('dueDate').value || null,
+            subtotal: parseFloat(document.getElementById('subtotal').value) || 0,
+            taxAmount: parseFloat(document.getElementById('taxAmount').value) || 0,
+            discountAmount: parseFloat(document.getElementById('discountAmount').value) || 0,
+            totalAmount: document.getElementById('amount').value,
+            paidAmount: document.getElementById('paid').value,
+            status: document.getElementById('status').value,
+            notes: document.getElementById('invoiceNotes').value
+        };
+        try {
+            await HMS.post('/billing/invoices', data);
+            closeInvoiceModal();
+            loadStats();
+            loadInvoices();
+        } catch(err) { alert(err.message); }
+    });
+});
+
+async function loadStats() {
+    try {
+        const res = await HMS.get('/billing/stats');
+        if (res && res.data) {
+            document.getElementById('totalRevenue').textContent = HMS.formatCurrency(res.data.totalRevenue);
+            document.getElementById('collectedAmount').textContent = HMS.formatCurrency(res.data.totalCollected);
+            document.getElementById('pendingAmount').textContent = HMS.formatCurrency(res.data.pendingAmount);
+            document.getElementById('overdueCount').textContent = res.data.overdueCount || 0;
+        }
+    } catch(e) {}
+}
+
+async function loadInvoices() {
+    try {
+        const res = await HMS.get('/billing/invoices', { page: 0, size: 50 });
+        const tbody = document.getElementById('invoiceTableBody');
+        if (!res || !res.data || res.data.content.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="py-10 text-center text-outline">No invoices found.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = res.data.content.map(inv => {
+            const cls = inv.status === 'PAID' ? 'inv-paid' : inv.status === 'PARTIAL' ? 'inv-partial' : 'inv-overdue';
+            return `<tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-5 text-sm font-medium text-primary">${inv.invoiceNumber}</td>
+                <td class="py-3 px-5 text-sm font-medium">${inv.patientName || '—'}</td>
+                <td class="py-3 px-5 text-sm text-on-surface-variant">${HMS.formatDate(inv.invoiceDate)}</td>
+                <td class="py-3 px-5 text-sm text-right font-medium">${HMS.formatCurrency(inv.totalAmount)}</td>
+                <td class="py-3 px-5 text-sm text-right text-green-700">${HMS.formatCurrency(inv.paidAmount)}</td>
+                <td class="py-3 px-5"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${cls}">${inv.status}</span></td>
+                <td class="py-3 px-5"><button class="p-1.5 rounded-lg hover:bg-surface-container-low text-outline hover:text-primary"><span class="material-symbols-outlined text-lg">print</span></button></td>
+            </tr>`;
+        }).join('');
+    } catch(e) { console.error(e); }
+}
+
+function openInvoiceModal() { document.getElementById('invoiceModal').classList.remove('hidden'); }
+function closeInvoiceModal() { document.getElementById('invoiceModal').classList.add('hidden'); document.getElementById('invoiceForm').reset(); document.getElementById('invoiceDate').value = new Date().toISOString().split('T')[0]; }
+</script>
+</body></html>

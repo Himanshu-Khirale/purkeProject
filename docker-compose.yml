@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  # ─── Spring Boot Backend ────────────────────────────
+  hms-backend:
+    build:
+      context: ./hms-backend
+      dockerfile: Dockerfile
+    container_name: hms-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - hms-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/api/v1/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ─── Frontend ─────────────────────────────────────
+  hms-frontend:
+    build:
+      context: ./hms-frontend
+      dockerfile: Dockerfile
+    container_name: hms-frontend
+    ports:
+      - "3000:80"
+    env_file:
+      - .env
+    networks:
+      - hms-network
+    restart: unless-stopped
+
+  # ─── Redis (Cache + Rate Limiting) ──────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: hms-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    networks:
+      - hms-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── RabbitMQ (Event System) ────────────────────────
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: hms-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - hms-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # ─── Nginx Reverse Proxy ───────────────────────────
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: hms-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - hms-backend
+    networks:
+      - hms-network
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+  rabbitmq-data:
+
+networks:
+  hms-network:
+    driver: bridge

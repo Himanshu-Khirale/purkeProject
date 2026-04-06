@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inpatient | HMS SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-secondary-container":"#006374","on-primary":"#ffffff","surface-bright":"#f8fafb","surface-container-lowest":"#ffffff","surface-tint":"#0c56d0","error-container":"#ffdad6","error":"#ba1a1a","primary-fixed-dim":"#b2c5ff","surface-container-low":"#f2f4f5","on-secondary":"#ffffff","on-error-container":"#93000a","tertiary":"#7b2600","secondary-container":"#6ae1ff","surface-container":"#eceeef","secondary-fixed":"#adecff","primary-container":"#0052cc","surface-container-high":"#e6e8e9","on-surface":"#191c1d","tertiary-container":"#a33500","on-surface-variant":"#434654","surface":"#f8fafb","outline-variant":"#c3c6d6","surface-container-highest":"#e1e3e4","primary":"#003d9b","on-error":"#ffffff","primary-fixed":"#dae2ff","background":"#f8fafb","on-primary-container":"#c4d2ff","outline":"#737685","surface-dim":"#d8dadb","secondary-fixed-dim":"#5dd6f3","secondary":"#00687a","on-background":"#191c1d","tertiary-fixed":"#ffdbcf"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"fontFamily":{"headline":["Inter"],"body":["Inter"],"label":["Inter"]}}}}</script>
+<style>
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.signature-gradient{background:linear-gradient(135deg,#0052cc,#003d9b)}
+.sidebar-item{display:flex;align-items:center;gap:0.75rem;padding:0.625rem 1rem;border-radius:0.5rem;font-weight:500;font-size:0.875rem;color:#434654;transition:all 0.2s}
+.sidebar-item:hover{background:#f2f4f5;color:#191c1d}.sidebar-item.active{background:#dae2ff;color:#003d9b;font-weight:600}
+.bed-occupied{background:#dae2ff;border:2px solid #0052cc;color:#003d9b}
+.bed-available{background:#d1fae5;border:2px solid #059669;color:#065f46}
+.bed-reserved{background:#fef3c7;border:2px solid #d97706;color:#92400e}
+.bed-maintenance{background:#e6e8e9;border:2px solid #737685;color:#434654}
+.bed-cell{border-radius:0.75rem;padding:1rem;display:flex;flex-direction:column;align-items:center;gap:0.25rem;cursor:pointer;transition:all 0.2s}
+.bed-cell:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.ward-admitted{background:#dae2ff;color:#003d9b}.ward-critical{background:#ffdad6;color:#93000a}.ward-stable{background:#d1fae5;color:#065f46}.ward-discharg{background:#e6e8e9;color:#434654}
+</style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex">
+<aside class="w-64 bg-surface-container-lowest h-screen sticky top-0 flex flex-col py-6 px-4 shrink-0">
+<div class="flex items-center gap-2 px-3 mb-8"><div class="w-9 h-9 signature-gradient rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1">medical_services</span></div><span class="text-lg font-bold tracking-tighter text-primary">HMS SaaS</span></div>
+<nav class="flex-1 space-y-1">
+<a href="dashboard.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">dashboard</span>Dashboard</a>
+<a href="patients.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">group</span>Patients</a>
+<a href="doctors.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">stethoscope</span>Doctors</a>
+<a href="appointments.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">calendar_month</span>Appointments</a>
+<a href="emr.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">description</span>EMR / EHR</a>
+<a href="billing.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">receipt_long</span>Billing</a>
+<a href="pharmacy.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">medication</span>Pharmacy</a>
+<a href="lab.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">biotech</span>Lab</a>
+<a href="inpatient.html" class="sidebar-item active"><span class="material-symbols-outlined text-xl">bed</span>Inpatient</a>
+<div class="my-4 border-t border-outline-variant/20"></div>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">bar_chart</span>Reports</a>
+<a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">settings</span>Settings</a>
+</nav>
+<div class="mt-auto px-3"><div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg"><div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-lg">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-on-surface truncate">User</p><p class="text-xs text-outline truncate">Medical Staff</p></div><a href="#" data-action="logout" class="text-outline hover:text-error"><span class="material-symbols-outlined text-lg">logout</span></a></div></div>
+</aside>
+<div class="flex-1 flex flex-col min-h-screen">
+<header class="h-16 bg-surface-container-lowest flex items-center justify-between px-8 sticky top-0 z-10">
+<div><h1 class="text-lg font-bold text-on-background tracking-tight">Inpatient Management</h1><p class="text-xs text-outline">Manage wards and bed occupancy</p></div>
+<div class="flex items-center gap-3">
+<button onclick="openAdmissionModal()" class="h-9 px-4 signature-gradient text-white font-bold rounded-xl hover:brightness-110 text-sm flex items-center gap-1.5"><span class="material-symbols-outlined text-lg">add</span>New Admission</button>
+</div>
+</header>
+<main class="flex-1 p-8 bg-background space-y-6">
+<section class="grid grid-cols-1 md:grid-cols-4 gap-5">
+<div class="bg-surface-container-lowest rounded-xl p-5 flex items-center gap-3 shadow-sm border border-outline-variant/10"><div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center"><span class="material-symbols-outlined text-primary">bed</span></div><div><p id="totalBeds" class="text-2xl font-extrabold">0</p><p class="text-xs text-outline font-semibold">Total Beds</p></div></div>
+<div class="bg-surface-container-lowest rounded-xl p-5 flex items-center gap-3 shadow-sm border border-outline-variant/10"><div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center"><span class="material-symbols-outlined text-secondary">person</span></div><div><p id="occupiedBeds" class="text-2xl font-extrabold">0</p><p class="text-xs text-outline font-semibold">Occupied</p></div></div>
+<div class="bg-surface-container-lowest rounded-xl p-5 flex items-center gap-3 shadow-sm border border-outline-variant/10"><div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center"><span class="material-symbols-outlined text-green-700">check_circle</span></div><div><p id="availableBeds" class="text-2xl font-extrabold">0</p><p class="text-xs text-outline font-semibold">Available</p></div></div>
+<div class="bg-surface-container-lowest rounded-xl p-5 flex items-center gap-3 shadow-sm border border-outline-variant/10"><div class="w-10 h-10 rounded-xl bg-error-container flex items-center justify-center"><span class="material-symbols-outlined text-error">emergency</span></div><div><p id="criticalCount" class="text-2xl font-extrabold text-error">0</p><p class="text-xs text-outline font-semibold">Critical</p></div></div>
+</section>
+
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/10">
+    <h3 class="text-base font-bold mb-4">Bed Layout</h3>
+    <div id="bedGrid" class="grid grid-cols-5 md:grid-cols-10 gap-3">
+        <!-- Dynamic Beds -->
+    </div>
+</div>
+
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10 shadow-sm">
+    <div class="p-5 font-bold">Current Admissions</div>
+    <table class="w-full text-sm">
+        <thead><tr class="bg-surface-container-low/50">
+            <th class="text-left py-3 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Bed #</th>
+            <th class="text-left py-3 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Patient</th>
+            <th class="text-left py-3 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Ward</th>
+            <th class="text-left py-3 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Status</th>
+            <th class="text-left py-3 px-5 text-xs font-semibold text-outline uppercase tracking-wider">Actions</th>
+        </tr></thead>
+        <tbody id="admissionTableBody" class="divide-y divide-outline-variant/10">
+            <tr><td colspan="5" class="py-10 text-center"><span class="material-symbols-outlined animate-spin text-primary">progress_activity</span></td></tr>
+        </tbody>
+    </table>
+</div>
+</main>
+</div>
+
+<!-- Admission Modal -->
+<div id="admissionModal" class="hidden fixed inset-0 z-50 bg-on-surface/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest rounded-2xl w-full max-w-2xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div class="px-6 py-4 border-b border-outline-variant/10 flex items-center justify-between shrink-0">
+            <h3 class="text-xl font-bold">Patient Admission</h3>
+            <button onclick="closeAdmissionModal()" class="p-2 hover:bg-surface-container-low rounded-full text-outline hover:text-error"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <form id="admissionForm" class="p-6 space-y-5 overflow-y-auto flex-1">
+
+            <!-- Patient & Bed -->
+            <div>
+                <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-primary text-lg">bed</span><h4 class="text-sm font-bold text-on-background uppercase tracking-wider">Assignment</h4></div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-outline uppercase tracking-wider">Patient <span class="text-error">*</span></label>
+                    <select id="patientId" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+                        <option value="">Select a patient</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mt-3">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Bed <span class="text-error">*</span></label>
+                        <select id="bedId" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg border border-outline-variant/20 text-sm">
+                            <option value="">Select available bed</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-outline uppercase tracking-wider">Consulting Doctor <span class="text-error">*</span></label>
+                        <select id="doctorId" required class="w-full h-10 px-3 bg-surface-container-low rounded-lg border border-outline-variant/20 text-sm">
+                            <option value="">Select doctor</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-outline-variant/15">
+
+            <!-- Clinical Details -->
+            <div>
+                <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-secondary text-lg">clinical_notes</span><h4 class="text-sm font-bold text-on-background uppercase tracking-wider">Clinical Details</h4></div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-outline uppercase tracking-wider">Admission Reason <span class="text-error">*</span></label>
+                    <textarea id="admissionReason" rows="2" required class="w-full px-3 py-2 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm resize-none" placeholder="Reason for inpatient admission"></textarea>
+                </div>
+                <div class="space-y-1 mt-3">
+                    <label class="text-xs font-bold text-outline uppercase tracking-wider">Diagnosis</label>
+                    <input type="text" id="diagnosis" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm" placeholder="Preliminary diagnosis">
+                </div>
+                <div class="space-y-1 mt-3">
+                    <label class="text-xs font-bold text-outline uppercase tracking-wider">Expected Discharge Date</label>
+                    <input type="date" id="expectedDischargeDate" class="w-full h-10 px-3 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm">
+                </div>
+                <div class="space-y-1 mt-3">
+                    <label class="text-xs font-bold text-outline uppercase tracking-wider">Notes</label>
+                    <textarea id="admissionNotes" rows="2" class="w-full px-3 py-2 bg-surface-container-low rounded-lg outline-none border border-outline-variant/20 text-sm resize-none" placeholder="Special instructions, diet restrictions, etc."></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2 sticky bottom-0 bg-surface-container-lowest pb-1">
+                <button type="button" onclick="closeAdmissionModal()" class="h-10 px-6 font-bold text-outline hover:bg-surface-container-low rounded-xl">Cancel</button>
+                <button type="submit" class="h-10 px-8 signature-gradient text-white font-bold rounded-xl shadow-lg hover:brightness-110">Admit Patient</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/api.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    if (!HMS.requireAuth()) return;
+    HMS.initSidebar();
+    
+    const user = HMS.getUser();
+    if (user && user.tenantName) document.querySelector('header h1').textContent = user.tenantName;
+
+    loadInpatientData();
+
+    try {
+        const [patients, doctors] = await Promise.all([HMS.loadPatients(), HMS.loadDoctors()]);
+    
+        const pSel = document.getElementById('patientId');
+        patients.forEach(p => pSel.innerHTML += `<option value="${p.id}">${p.name}</option>`);
+
+        const dSel = document.getElementById('doctorId');
+        doctors.forEach(d => dSel.innerHTML += `<option value="${d.id}">${d.name}</option>`);
+    } catch(e) {}
+
+    document.getElementById('admissionForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const data = {
+            patientId: document.getElementById('patientId').value,
+            bedId: document.getElementById('bedId').value,
+            doctorId: document.getElementById('doctorId').value,
+            admissionReason: document.getElementById('admissionReason').value,
+            diagnosis: document.getElementById('diagnosis').value,
+            expectedDischargeDate: document.getElementById('expectedDischargeDate').value || null,
+            notes: document.getElementById('admissionNotes').value
+        };
+        try {
+            await HMS.post('/inpatient/beds/assign', data);
+            closeAdmissionModal();
+            loadInpatientData();
+        } catch(err) { alert(err.message); }
+    });
+});
+
+async function loadInpatientData() {
+    try {
+        const res = await HMS.get('/inpatient/beds');
+        const grid = document.getElementById('bedGrid');
+        const tbody = document.getElementById('admissionTableBody');
+        const bedSelect = document.getElementById('bedId');
+        
+        if (!res || !res.data) return;
+        const beds = res.data;
+        
+        let occupied = 0, available = 0;
+        
+        bedSelect.innerHTML = '<option value="">Select available bed</option>';
+        
+        grid.innerHTML = beds.map(b => {
+            const isOcc = b.status === 'OCCUPIED';
+            if (isOcc) occupied++; else available++;
+            const cls = isOcc ? 'bed-occupied' : 'bed-available';
+            if (!isOcc) {
+                const opt = document.createElement('option');
+                opt.value = b.id;
+                opt.textContent = `${b.bedNumber} (${b.wardName || 'General'})`;
+                bedSelect.appendChild(opt);
+            }
+            return `<div class="bed-cell ${cls}"><span class="material-symbols-outlined text-lg">bed</span><span class="text-xs font-bold">${b.bedNumber}</span></div>`;
+        }).join('');
+        
+        tbody.innerHTML = beds.filter(b => b.status === 'OCCUPIED').map(b => `
+            <tr class="hover:bg-surface-container-low/50">
+                <td class="py-3 px-5 text-sm font-bold text-primary">${b.bedNumber}</td>
+                <td class="py-3 px-5 text-sm font-medium">${b.patientName || 'Patient'}</td>
+                <td class="py-3 px-5 text-sm text-on-surface-variant">${b.wardName || 'General'}</td>
+                <td class="py-3 px-5"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ward-admitted">Admitted</span></td>
+                <td class="py-3 px-5"><button onclick="discharge('${b.id}')" class="text-outline hover:text-error p-1"><span class="material-symbols-outlined text-lg">logout</span></button></td>
+            </tr>`).join('');
+        
+        if (beds.filter(b => b.status === 'OCCUPIED').length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="py-10 text-center text-outline">No current admissions.</td></tr>';
+        }
+            
+        document.getElementById('totalBeds').textContent = beds.length;
+        document.getElementById('occupiedBeds').textContent = occupied;
+        document.getElementById('availableBeds').textContent = available;
+    } catch(e) { console.error(e); }
+}
+
+async function discharge(id) {
+    if (confirm('Discharge this patient?')) {
+        try { await HMS.del(`/inpatient/beds/${id}/release`); loadInpatientData(); } catch(e) { alert(e.message); }
+    }
+}
+
+function openAdmissionModal() { document.getElementById('admissionModal').classList.remove('hidden'); }
+function closeAdmissionModal() { document.getElementById('admissionModal').classList.add('hidden'); document.getElementById('admissionForm').reset(); }
+</script>
+</body></html>

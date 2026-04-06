@@ -1,0 +1,8 @@
+.env
+*.jar
+target/
+node_modules/
+.idea/
+*.iml
+logs/
+*.log
