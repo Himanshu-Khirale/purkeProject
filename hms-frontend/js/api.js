@@ -289,6 +289,20 @@ const HMS = (() => {
         const data = mapToSupabase(resource, body);
         data.tenant_id = TENANT_ID;
 
+        // Auto-create wrapper user for doctors to satisfy foreign key constraint
+        if (table === 'doctors' && !data.user_id) {
+            const tempUser = await SupabaseClient.insert('users', {
+                tenant_id: TENANT_ID,
+                email: body.email || `doc_${Date.now()}@hospital.com`,
+                password_hash: '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+                first_name: body.firstName || 'New',
+                last_name: body.lastName || 'Doctor',
+                is_active: true
+            });
+            data.user_id = tempUser.id || tempUser[0]?.id;
+            if (!data.license_number) data.license_number = 'LP-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+        }
+
         // Look up patient by MRN if provided
         if (body.patientMrn && !data.patient_id) {
             const pRes = await SupabaseClient.select('patients', {
@@ -408,16 +422,23 @@ const HMS = (() => {
             is_active: true
         });
 
-        // 2. Create Admin Role and link user
-        const adminRole = await SupabaseClient.insert('roles', {
-            tenant_id: tenantId,
-            name: 'Admin',
-            slug: 'admin',
-            description: 'Full system access'
-        });
+        // 2. Load or Create Admin Role to avoid unique constraint violation
+        const roleCheck = await SupabaseClient.select('roles', { filters: { slug: 'eq.admin', tenant_id: `eq.${tenantId}` } });
+        let adminRole;
+        if (roleCheck.data && roleCheck.data.length > 0) {
+            adminRole = roleCheck.data[0];
+        } else {
+            adminRole = await SupabaseClient.insert('roles', {
+                tenant_id: tenantId,
+                name: 'Admin',
+                slug: 'admin',
+                description: 'Full system access'
+            });
+            if (Array.isArray(adminRole)) adminRole = adminRole[0];
+        }
 
         await SupabaseClient.insert('user_roles', {
-            user_id: user.id,
+            user_id: user.id || user[0]?.id,
             role_id: adminRole.id
         });
 
