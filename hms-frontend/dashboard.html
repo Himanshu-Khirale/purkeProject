@@ -1,328 +1,456 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Dashboard | HMS SaaS</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-tailwind.config = { darkMode: "class", theme: { extend: {
-"colors": {
-    "on-secondary-fixed":"#001f26","on-secondary-container":"#006374","on-primary-fixed-variant":"#0040a2","on-secondary-fixed-variant":"#004e5d",
-    "on-primary":"#ffffff","surface-bright":"#f8fafb","surface-container-lowest":"#ffffff","surface-tint":"#0c56d0",
-    "error-container":"#ffdad6","inverse-surface":"#2e3132","error":"#ba1a1a","primary-fixed-dim":"#b2c5ff",
-    "surface-container-low":"#f2f4f5","on-secondary":"#ffffff","on-error-container":"#93000a","tertiary":"#7b2600",
-    "secondary-container":"#6ae1ff","surface-container":"#eceeef","secondary-fixed":"#adecff","primary-container":"#0052cc",
-    "surface-container-high":"#e6e8e9","on-surface":"#191c1d","tertiary-container":"#a33500","on-surface-variant":"#434654",
-    "surface":"#f8fafb","surface-variant":"#e1e3e4","outline-variant":"#c3c6d6","surface-container-highest":"#e1e3e4",
-    "primary":"#003d9b","on-primary-fixed":"#001848","on-error":"#ffffff","primary-fixed":"#dae2ff",
-    "inverse-on-surface":"#eff1f2","background":"#f8fafb","inverse-primary":"#b2c5ff","on-primary-container":"#c4d2ff",
-    "outline":"#737685","surface-dim":"#d8dadb","on-tertiary":"#ffffff","secondary-fixed-dim":"#5dd6f3",
-    "secondary":"#00687a","on-background":"#191c1d"
-},
-"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
-"fontFamily":{"headline":["Inter"],"body":["Inter"],"label":["Inter"]}
-}}}
-</script>
-<style>
-.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
-.signature-gradient{background:linear-gradient(135deg,#0052cc 0%,#003d9b 100%)}
-.glass-panel{background:rgba(248,250,251,0.8);backdrop-filter:blur(24px)}
-.sidebar-item{display:flex;align-items:center;gap:0.75rem;padding:0.625rem 1rem;border-radius:0.5rem;font-weight:500;font-size:0.875rem;color:#434654;transition:all 0.2s}
-.sidebar-item:hover{background:#f2f4f5;color:#191c1d}
-.sidebar-item.active{background:#dae2ff;color:#003d9b;font-weight:600}
-.kpi-card{background:#ffffff;border-radius:0.75rem;padding:1.5rem;transition:all 0.3s}
-.kpi-card:hover{box-shadow:0 12px 40px rgba(0,61,155,0.06)}
-.status-badge{padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.75rem;font-weight:600}
-.status-confirmed{background:#d1fae5;color:#065f46}
-.status-pending{background:#fef3c7;color:#92400e}
-.status-cancelled{background:#ffdad6;color:#93000a}
-</style>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dashboard | HMS SaaS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class", theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001f26", "on-secondary-container": "#006374", "on-primary-fixed-variant": "#0040a2", "on-secondary-fixed-variant": "#004e5d",
+                        "on-primary": "#ffffff", "surface-bright": "#f8fafb", "surface-container-lowest": "#ffffff", "surface-tint": "#0c56d0",
+                        "error-container": "#ffdad6", "inverse-surface": "#2e3132", "error": "#ba1a1a", "primary-fixed-dim": "#b2c5ff",
+                        "surface-container-low": "#f2f4f5", "on-secondary": "#ffffff", "on-error-container": "#93000a", "tertiary": "#7b2600",
+                        "secondary-container": "#6ae1ff", "surface-container": "#eceeef", "secondary-fixed": "#adecff", "primary-container": "#0052cc",
+                        "surface-container-high": "#e6e8e9", "on-surface": "#191c1d", "tertiary-container": "#a33500", "on-surface-variant": "#434654",
+                        "surface": "#f8fafb", "surface-variant": "#e1e3e4", "outline-variant": "#c3c6d6", "surface-container-highest": "#e1e3e4",
+                        "primary": "#003d9b", "on-primary-fixed": "#001848", "on-error": "#ffffff", "primary-fixed": "#dae2ff",
+                        "inverse-on-surface": "#eff1f2", "background": "#f8fafb", "inverse-primary": "#b2c5ff", "on-primary-container": "#c4d2ff",
+                        "outline": "#737685", "surface-dim": "#d8dadb", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#5dd6f3",
+                        "secondary": "#00687a", "on-background": "#191c1d"
+                    },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    "fontFamily": { "headline": ["Inter"], "body": ["Inter"], "label": ["Inter"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle
+        }
+
+        .signature-gradient {
+            background: linear-gradient(135deg, #0052cc 0%, #003d9b 100%)
+        }
+
+        .glass-panel {
+            background: rgba(248, 250, 251, 0.8);
+            backdrop-filter: blur(24px)
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #434654;
+            transition: all 0.2s
+        }
+
+        .sidebar-item:hover {
+            background: #f2f4f5;
+            color: #191c1d
+        }
+
+        .sidebar-item.active {
+            background: #dae2ff;
+            color: #003d9b;
+            font-weight: 600
+        }
+
+        .kpi-card {
+            background: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s
+        }
+
+        .kpi-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 61, 155, 0.06)
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600
+        }
+
+        .status-confirmed {
+            background: #d1fae5;
+            color: #065f46
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e
+        }
+
+        .status-cancelled {
+            background: #ffdad6;
+            color: #93000a
+        }
+    </style>
 </head>
+
 <body class="bg-background text-on-background font-body min-h-screen flex">
 
-<!-- Sidebar -->
-<aside class="w-64 bg-surface-container-lowest h-screen sticky top-0 flex flex-col py-6 px-4 shrink-0">
-    <div class="flex items-center gap-2 px-3 mb-8">
-        <div class="w-9 h-9 signature-gradient rounded-lg flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1">medical_services</span>
-        </div>
-        <span class="text-lg font-bold tracking-tighter text-primary">HMS SaaS</span>
-    </div>
-    <nav class="flex-1 space-y-1">
-        <a href="dashboard.html" class="sidebar-item active"><span class="material-symbols-outlined text-xl">dashboard</span>Dashboard</a>
-        <a href="patients.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">group</span>Patients</a>
-        <a href="doctors.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">stethoscope</span>Doctors</a>
-        <a href="appointments.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">calendar_month</span>Appointments</a>
-        <a href="emr.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">description</span>EMR / EHR</a>
-        <a href="billing.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">receipt_long</span>Billing</a>
-        <a href="pharmacy.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">medication</span>Pharmacy</a>
-        <a href="lab.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">biotech</span>Lab</a>
-        <a href="inpatient.html" class="sidebar-item"><span class="material-symbols-outlined text-xl">bed</span>Inpatient</a>
-        <div class="my-4 border-t border-outline-variant/20"></div>
-        <a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">bar_chart</span>Reports</a>
-        <a href="#" class="sidebar-item"><span class="material-symbols-outlined text-xl">settings</span>Settings</a>
-    </nav>
-    <div class="mt-auto px-3">
-        <div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg">
-            <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-lg">person</span></div>
-            <div class="flex-1 min-w-0">
-                <p class="text-sm font-semibold text-on-surface truncate">Dr. Admin</p>
-                <p class="text-xs text-outline truncate">Super Admin</p>
+    <!-- Sidebar -->
+    <aside class="w-64 bg-surface-container-lowest h-screen sticky top-0 flex flex-col py-6 px-4 shrink-0">
+        <div class="flex items-center gap-2 px-3 mb-8">
+            <div class="w-9 h-9 signature-gradient rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-xl"
+                    style="font-variation-settings:'FILL' 1">medical_services</span>
             </div>
-            <a href="login.html" class="text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">logout</span></a>
+            <span class="text-lg font-bold tracking-tighter text-primary">HMS SaaS</span>
         </div>
-    </div>
-</aside>
+        <nav class="flex-1 space-y-1">
+            <a href="dashboard.html" class="sidebar-item active"><span
+                    class="material-symbols-outlined text-xl">dashboard</span>Dashboard</a>
+            <a href="patients.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">group</span>Patients</a>
+            <a href="doctors.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">stethoscope</span>Doctors</a>
+            <a href="appointments.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">calendar_month</span>Appointments</a>
+            <a href="emr.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">description</span>EMR / EHR</a>
+            <a href="billing.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">receipt_long</span>Billing</a>
+            <a href="pharmacy.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">medication</span>Pharmacy</a>
+            <a href="lab.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">biotech</span>Lab</a>
+            <a href="inpatient.html" class="sidebar-item"><span
+                    class="material-symbols-outlined text-xl">bed</span>Inpatient</a>
+            <div class="my-4 border-t border-outline-variant/20"></div>
+        </nav>
+        <div class="mt-auto px-3">
+            <div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg">
+                <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center"><span
+                        class="material-symbols-outlined text-on-primary-container text-lg">person</span></div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-on-surface truncate">Dr. Admin</p>
+                    <p class="text-xs text-outline truncate">Super Admin</p>
+                </div>
+                <a href="login.html" class="text-outline hover:text-error transition-colors"><span
+                        class="material-symbols-outlined text-lg">logout</span></a>
+            </div>
+        </div>
+    </aside>
 
-<!-- Main Content -->
-<div class="flex-1 flex flex-col min-h-screen">
-    <!-- Top Bar -->
-    <header class="h-16 bg-surface-container-lowest flex items-center justify-between px-8 sticky top-0 z-10">
-        <div>
-            <h1 class="text-lg font-bold text-on-background tracking-tight">City General Hospital</h1>
-            <p class="text-xs text-outline">Dashboard Overview</p>
-        </div>
-        <div class="flex items-center gap-4">
-            <div class="relative">
-                <input type="text" placeholder="Search..." class="h-9 w-64 pl-9 pr-4 bg-surface-container-low rounded-lg text-sm outline-none border-none focus:ring-2 focus:ring-secondary/20"/>
-                <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col min-h-screen">
+        <!-- Top Bar -->
+        <header class="h-16 bg-surface-container-lowest flex items-center justify-between px-8 sticky top-0 z-10">
+            <div>
+                <h1 class="text-lg font-bold text-on-background tracking-tight">City General Hospital</h1>
+                <p class="text-xs text-outline">Dashboard Overview</p>
             </div>
-            <button class="relative p-2 text-outline hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">notifications</span>
-                <div class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-error rounded-full flex items-center justify-center"><span class="text-[10px] text-white font-bold">3</span></div>
-            </button>
-        </div>
-    </header>
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search..."
+                        class="h-9 w-64 pl-9 pr-4 bg-surface-container-low rounded-lg text-sm outline-none border-none focus:ring-2 focus:ring-secondary/20" />
+                    <span
+                        class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+                </div>
+                <button class="relative p-2 text-outline hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <div
+                        class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-error rounded-full flex items-center justify-center">
+                        <span class="text-[10px] text-white font-bold">3</span></div>
+                </button>
+            </div>
+        </header>
 
-    <!-- Dashboard Content -->
-    <main class="flex-1 p-8 space-y-8 bg-background">
-        <!-- KPI Cards -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="kpi-card">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center"><span class="material-symbols-outlined text-primary text-2xl">group</span></div>
-                    <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+12%</span>
+        <!-- Dashboard Content -->
+        <main class="flex-1 p-8 space-y-8 bg-background">
+            <!-- KPI Cards -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center"><span
+                                class="material-symbols-outlined text-primary text-2xl">group</span></div>
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+12%</span>
+                    </div>
+                    <p class="text-sm font-medium text-on-surface-variant mb-1">Total Patients</p>
+                    <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
                 </div>
-                <p class="text-sm font-medium text-on-surface-variant mb-1">Total Patients</p>
-                <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
-            </div>
-            <div class="kpi-card">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-secondary-fixed flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-2xl">stethoscope</span></div>
-                    <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+2</span>
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-secondary-fixed flex items-center justify-center"><span
+                                class="material-symbols-outlined text-secondary text-2xl">stethoscope</span></div>
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+2</span>
+                    </div>
+                    <p class="text-sm font-medium text-on-surface-variant mb-1">Active Doctors</p>
+                    <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
                 </div>
-                <p class="text-sm font-medium text-on-surface-variant mb-1">Active Doctors</p>
-                <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
-            </div>
-            <div class="kpi-card">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-secondary-container/30 flex items-center justify-center"><span class="material-symbols-outlined text-on-secondary-container text-2xl">calendar_month</span></div>
-                    <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Today</span>
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-secondary-container/30 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-on-secondary-container text-2xl">calendar_month</span>
+                        </div>
+                        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Today</span>
+                    </div>
+                    <p class="text-sm font-medium text-on-surface-variant mb-1">Today's Appointments</p>
+                    <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
                 </div>
-                <p class="text-sm font-medium text-on-surface-variant mb-1">Today's Appointments</p>
-                <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
-            </div>
-            <div class="kpi-card">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center"><span class="material-symbols-outlined text-green-700 text-2xl">currency_rupee</span></div>
-                    <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+18%</span>
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center"><span
+                                class="material-symbols-outlined text-green-700 text-2xl">currency_rupee</span></div>
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+18%</span>
+                    </div>
+                    <p class="text-sm font-medium text-on-surface-variant mb-1">Revenue This Month</p>
+                    <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
                 </div>
-                <p class="text-sm font-medium text-on-surface-variant mb-1">Revenue This Month</p>
-                <p class="text-3xl font-extrabold text-on-background tracking-tight">...</p>
-            </div>
-        </section>
+            </section>
 
-        <!-- Charts Row -->
-        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-6">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-base font-bold text-on-background">Patient Visits (Last 7 Days)</h3>
-                    <select class="text-xs bg-surface-container-low rounded-lg px-3 py-1.5 border-none font-medium text-outline"><option>This Week</option><option>Last Week</option></select>
-                </div>
-                <div class="h-48 flex items-end gap-3">
-                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-lg bg-primary-container/70 transition-all" style="height:60%"></div><span class="text-xs text-outline">Mon</span></div>
-                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-lg bg-primary-container/70" style="height:80%"></div><span class="text-xs text-outline">Tue</span></div>
-                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-lg bg-primary-container/70" style="height:45%"></div><span class="text-xs text-outline">Wed</span></div>
-                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-lg bg-primary-container" style="height:90%"></div><span class="text-xs text-outline">Thu</span></div>
-                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-lg bg-primary-container/70" style="height:70%"></div><span class="text-xs text-outline">Fri</span></div>
-                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-lg bg-primary-container/40" style="height:35%"></div><span class="text-xs text-outline">Sat</span></div>
-                    <div class="flex-1 flex flex-col items-center gap-1"><div class="w-full rounded-t-lg bg-primary-container/30" style="height:20%"></div><span class="text-xs text-outline">Sun</span></div>
-                </div>
-            </div>
-            <div class="bg-surface-container-lowest rounded-xl p-6">
-                <h3 class="text-base font-bold text-on-background mb-6">Bed Occupancy</h3>
-                <div class="flex items-center justify-center">
-                    <div class="relative w-40 h-40">
-                        <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120" fill="none">
-                            <circle cx="60" cy="60" r="52" stroke="#e6e8e9" stroke-width="12"/>
-                            <circle cx="60" cy="60" r="52" stroke="#0052cc" stroke-width="12" stroke-dasharray="326.73" stroke-dashoffset="49" stroke-linecap="round"/>
-                        </svg>
-                        <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <span id="bedOccPercent" class="text-3xl font-extrabold text-on-background">—</span>
-                            <span class="text-xs text-outline">Occupied</span>
+            <!-- Charts Row -->
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-base font-bold text-on-background">Patient Visits (Last 7 Days)</h3>
+                        <select
+                            class="text-xs bg-surface-container-low rounded-lg px-3 py-1.5 border-none font-medium text-outline">
+                            <option>This Week</option>
+                            <option>Last Week</option>
+                        </select>
+                    </div>
+                    <div class="h-48 flex items-end gap-3">
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <div class="w-full rounded-t-lg bg-primary-container/70 transition-all" style="height:60%">
+                            </div><span class="text-xs text-outline">Mon</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <div class="w-full rounded-t-lg bg-primary-container/70" style="height:80%"></div><span
+                                class="text-xs text-outline">Tue</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <div class="w-full rounded-t-lg bg-primary-container/70" style="height:45%"></div><span
+                                class="text-xs text-outline">Wed</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <div class="w-full rounded-t-lg bg-primary-container" style="height:90%"></div><span
+                                class="text-xs text-outline">Thu</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <div class="w-full rounded-t-lg bg-primary-container/70" style="height:70%"></div><span
+                                class="text-xs text-outline">Fri</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <div class="w-full rounded-t-lg bg-primary-container/40" style="height:35%"></div><span
+                                class="text-xs text-outline">Sat</span>
+                        </div>
+                        <div class="flex-1 flex flex-col items-center gap-1">
+                            <div class="w-full rounded-t-lg bg-primary-container/30" style="height:20%"></div><span
+                                class="text-xs text-outline">Sun</span>
                         </div>
                     </div>
                 </div>
-                <div class="mt-6 grid grid-cols-2 gap-3">
-                    <div class="bg-surface-container-low rounded-lg p-3 text-center"><p id="bedOccupied" class="text-lg font-bold text-primary">0</p><p class="text-xs text-outline">Occupied</p></div>
-                    <div class="bg-surface-container-low rounded-lg p-3 text-center"><p id="bedAvailable" class="text-lg font-bold text-secondary">0</p><p class="text-xs text-outline">Available</p></div>
+                <div class="bg-surface-container-lowest rounded-xl p-6">
+                    <h3 class="text-base font-bold text-on-background mb-6">Bed Occupancy</h3>
+                    <div class="flex items-center justify-center">
+                        <div class="relative w-40 h-40">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120" fill="none">
+                                <circle cx="60" cy="60" r="52" stroke="#e6e8e9" stroke-width="12" />
+                                <circle cx="60" cy="60" r="52" stroke="#0052cc" stroke-width="12"
+                                    stroke-dasharray="326.73" stroke-dashoffset="49" stroke-linecap="round" />
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span id="bedOccPercent" class="text-3xl font-extrabold text-on-background">—</span>
+                                <span class="text-xs text-outline">Occupied</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 grid grid-cols-2 gap-3">
+                        <div class="bg-surface-container-low rounded-lg p-3 text-center">
+                            <p id="bedOccupied" class="text-lg font-bold text-primary">0</p>
+                            <p class="text-xs text-outline">Occupied</p>
+                        </div>
+                        <div class="bg-surface-container-low rounded-lg p-3 text-center">
+                            <p id="bedAvailable" class="text-lg font-bold text-secondary">0</p>
+                            <p class="text-xs text-outline">Available</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Recent Appointments Table -->
-        <section class="bg-surface-container-lowest rounded-xl p-6">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-base font-bold text-on-background">Recent Appointments</h3>
-                <a href="appointments.html" class="text-xs font-bold text-primary hover:text-secondary transition-colors flex items-center gap-1">View All<span class="material-symbols-outlined text-sm">arrow_forward</span></a>
-            </div>
-            <table class="w-full">
-                <thead><tr class="text-left">
-                    <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Patient</th>
-                    <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Doctor</th>
-                    <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Date</th>
-                    <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Time</th>
-                    <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Status</th>
-                </tr></thead>
-                <tbody class="divide-y divide-outline-variant/10">
-                    <tr><td colspan="5" class="py-10 text-center"><span class="material-symbols-outlined animate-spin text-primary">progress_activity</span></td></tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
-<script src="js/config.js"></script>
-<script src="js/supabase-client.js"></script>
-<script src="js/api.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    if (!HMS.requireAuth()) return;
-    HMS.initSidebar();
+            <!-- Recent Appointments Table -->
+            <section class="bg-surface-container-lowest rounded-xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-base font-bold text-on-background">Recent Appointments</h3>
+                    <a href="appointments.html"
+                        class="text-xs font-bold text-primary hover:text-secondary transition-colors flex items-center gap-1">View
+                        All<span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+                </div>
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left">
+                            <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Patient</th>
+                            <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Doctor</th>
+                            <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Date</th>
+                            <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Time</th>
+                            <th class="pb-4 text-xs font-semibold text-outline uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/10">
+                        <tr>
+                            <td colspan="5" class="py-10 text-center"><span
+                                    class="material-symbols-outlined animate-spin text-primary">progress_activity</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <script src="js/config.js"></script>
+        <script src="js/supabase-client.js"></script>
+        <script src="js/api.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                if (!HMS.requireAuth()) return;
+                HMS.initSidebar();
 
-    // Fetch dashboard stats
-    try {
-        const statsRes = await HMS.get('/dashboard/stats');
-        if (statsRes && statsRes.data) {
-            const s = statsRes.data;
-            const kpis = document.querySelectorAll('.kpi-card');
-            if (kpis[0]) kpis[0].querySelector('.text-3xl').textContent = Number(s.totalPatients || 0).toLocaleString('en-IN');
-            if (kpis[1]) kpis[1].querySelector('.text-3xl').textContent = Number(s.totalDoctors || 0).toLocaleString('en-IN');
-            if (kpis[2]) kpis[2].querySelector('.text-3xl').textContent = Number(s.todayAppointments || 0).toLocaleString('en-IN');
-            if (kpis[3]) kpis[3].querySelector('.text-3xl').textContent = HMS.formatCurrency(s.totalRevenue);
-        }
-    } catch (e) { console.warn('Dashboard stats fallback:', e); }
+                // Fetch dashboard stats
+                try {
+                    const statsRes = await HMS.get('/dashboard/stats');
+                    if (statsRes && statsRes.data) {
+                        const s = statsRes.data;
+                        const kpis = document.querySelectorAll('.kpi-card');
+                        if (kpis[0]) kpis[0].querySelector('.text-3xl').textContent = Number(s.totalPatients || 0).toLocaleString('en-IN');
+                        if (kpis[1]) kpis[1].querySelector('.text-3xl').textContent = Number(s.totalDoctors || 0).toLocaleString('en-IN');
+                        if (kpis[2]) kpis[2].querySelector('.text-3xl').textContent = Number(s.todayAppointments || 0).toLocaleString('en-IN');
+                        if (kpis[3]) kpis[3].querySelector('.text-3xl').textContent = HMS.formatCurrency(s.totalRevenue);
+                    }
+                } catch (e) { console.warn('Dashboard stats fallback:', e); }
 
-    // Fetch bed occupancy
-    try {
-        const bedRes = await HMS.get('/inpatient/beds');
-        if (bedRes && bedRes.data) {
-            const beds = bedRes.data;
-            const total = beds.length || 1;
-            const occ = beds.filter(b => b.status === 'OCCUPIED').length;
-            const avail = total - occ;
-            const pct = Math.round((occ / total) * 100);
-            const el = document.getElementById('bedOccPercent');
-            if (el) el.textContent = pct + '%';
-            const occEl = document.getElementById('bedOccupied');
-            const availEl = document.getElementById('bedAvailable');
-            if (occEl) occEl.textContent = occ;
-            if (availEl) availEl.textContent = avail;
-            // Update SVG donut
-            const circle = document.querySelector('svg circle:nth-child(2)');
-            if (circle) {
-                const circumference = 326.73;
-                circle.setAttribute('stroke-dashoffset', circumference - (circumference * pct / 100));
-            }
-        }
-    } catch (e) { console.warn('Bed occupancy fallback:', e); }
+                // Fetch bed occupancy
+                try {
+                    const bedRes = await HMS.get('/inpatient/beds');
+                    if (bedRes && bedRes.data) {
+                        const beds = bedRes.data;
+                        const total = beds.length || 1;
+                        const occ = beds.filter(b => b.status === 'OCCUPIED').length;
+                        const avail = total - occ;
+                        const pct = Math.round((occ / total) * 100);
+                        const el = document.getElementById('bedOccPercent');
+                        if (el) el.textContent = pct + '%';
+                        const occEl = document.getElementById('bedOccupied');
+                        const availEl = document.getElementById('bedAvailable');
+                        if (occEl) occEl.textContent = occ;
+                        if (availEl) availEl.textContent = avail;
+                        // Update SVG donut
+                        const circle = document.querySelector('svg circle:nth-child(2)');
+                        if (circle) {
+                            const circumference = 326.73;
+                            circle.setAttribute('stroke-dashoffset', circumference - (circumference * pct / 100));
+                        }
+                    }
+                } catch (e) { console.warn('Bed occupancy fallback:', e); }
 
-    // Fetch recent appointments
-    try {
-        const apptRes = await HMS.get('appointments', { page: 0, size: 5, sortBy: 'appointmentDate', sortDir: 'desc' });
-        const tbody = document.querySelector('section:last-child tbody');
-        
-        // Use real data if available, otherwise show fake data
-        const hasRealData = apptRes && apptRes.data && apptRes.data.content && apptRes.data.content.length > 0;
-        const displayData = hasRealData ? apptRes.data.content : [
-            { patientName: 'James Wilson', doctorName: 'Dr. Sarah Connor', appointmentDate: new Date().toISOString().split('T')[0], startTime: '09:00 AM', status: 'CONFIRMED' },
-            { patientName: 'Robert Fox', doctorName: 'Dr. Michael Chen', appointmentDate: new Date().toISOString().split('T')[0], startTime: '10:30 AM', status: 'PENDING' },
-            { patientName: 'Emma Watson', doctorName: 'Dr. Sarah Connor', appointmentDate: new Date().toISOString().split('T')[0], startTime: '02:00 PM', status: 'COMPLETED' }
-        ];
+                // Fetch recent appointments
+                try {
+                    const apptRes = await HMS.get('appointments', { page: 0, size: 5, sortBy: 'appointmentDate', sortDir: 'desc' });
+                    const tbody = document.querySelector('section:last-child tbody');
 
-        if (tbody) {
-            const colors = ['primary', 'secondary', 'tertiary', 'error', 'primary'];
-            tbody.innerHTML = displayData.map((a, i) => {
-                const c = colors[i % colors.length];
-                const parts = (a.patientName || 'P').split(' ');
-                const ini = HMS.initials(parts[0], parts[1] || '');
-                const statusClass = a.status === 'CANCELLED' ? 'status-cancelled' : a.status === 'CONFIRMED' || a.status === 'COMPLETED' ? 'status-confirmed' : 'status-pending';
-                return `<tr class="hover:bg-surface-container-low/50 transition-colors">
+                    // Use real data if available, otherwise show fake data
+                    const hasRealData = apptRes && apptRes.data && apptRes.data.content && apptRes.data.content.length > 0;
+                    const displayData = hasRealData ? apptRes.data.content : [
+                        { patientName: 'James Wilson', doctorName: 'Dr. Sarah Connor', appointmentDate: new Date().toISOString().split('T')[0], startTime: '09:00 AM', status: 'CONFIRMED' },
+                        { patientName: 'Robert Fox', doctorName: 'Dr. Michael Chen', appointmentDate: new Date().toISOString().split('T')[0], startTime: '10:30 AM', status: 'PENDING' },
+                        { patientName: 'Emma Watson', doctorName: 'Dr. Sarah Connor', appointmentDate: new Date().toISOString().split('T')[0], startTime: '02:00 PM', status: 'COMPLETED' }
+                    ];
+
+                    if (tbody) {
+                        const colors = ['primary', 'secondary', 'tertiary', 'error', 'primary'];
+                        tbody.innerHTML = displayData.map((a, i) => {
+                            const c = colors[i % colors.length];
+                            const parts = (a.patientName || 'P').split(' ');
+                            const ini = HMS.initials(parts[0], parts[1] || '');
+                            const statusClass = a.status === 'CANCELLED' ? 'status-cancelled' : a.status === 'CONFIRMED' || a.status === 'COMPLETED' ? 'status-confirmed' : 'status-pending';
+                            return `<tr class="hover:bg-surface-container-low/50 transition-colors">
                     <td class="py-3.5"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-${c === 'error' ? 'error-container' : c + '-fixed'} flex items-center justify-center text-xs font-bold text-${c}">${ini}</div><span class="font-medium text-sm">${a.patientName || '—'}</span></div></td>
                     <td class="py-3.5 text-sm text-on-surface-variant">${a.doctorName || '—'}</td>
                     <td class="py-3.5 text-sm text-on-surface-variant">${HMS.formatDate(a.appointmentDate)}</td>
                     <td class="py-3.5 text-sm text-on-surface-variant">${a.startTime || '—'}</td>
                     <td class="py-3.5"><span class="status-badge ${statusClass}">${(a.status || 'Pending').charAt(0) + (a.status || 'Pending').slice(1).toLowerCase()}</span></td>
                 </tr>`;
-            }).join('');
-        }
-    } catch (e) { console.warn('Appointments fallback:', e); }
+                        }).join('');
+                    }
+                } catch (e) { console.warn('Appointments fallback:', e); }
 
-    // Update Patient Visits Chart
-    try {
-        const today = new Date();
-        const last7Days = [];
-        for (let i = 6; i >= 0; i--) {
-            const d = new Date();
-            d.setDate(today.getDate() - i);
-            last7Days.push(d.toISOString().split('T')[0]);
-        }
+                // Update Patient Visits Chart
+                try {
+                    const today = new Date();
+                    const last7Days = [];
+                    for (let i = 6; i >= 0; i--) {
+                        const d = new Date();
+                        d.setDate(today.getDate() - i);
+                        last7Days.push(d.toISOString().split('T')[0]);
+                    }
 
-        let appts = [];
-        try {
-            const apptData = await HMS.get('appointments', { 
-                page: 0, size: 100, 
-                filters: { appointmentDate: `gte.${last7Days[0]}` } 
-            });
-            appts = apptData.data?.data || [];
-        } catch (e) {
-            console.warn('API error, using fake data');
-        }
+                    let appts = [];
+                    try {
+                        const apptData = await HMS.get('appointments', {
+                            page: 0, size: 100,
+                            filters: { appointmentDate: `gte.${last7Days[0]}` }
+                        });
+                        appts = apptData.data?.data || [];
+                    } catch (e) {
+                        console.warn('API error, using fake data');
+                    }
 
-        const fakeData = [12, 18, 15, 22, 28, 20, 25];
-        const counts = last7Days.map((date, i) => {
-            const realCount = appts.filter(a => a.appointmentDate === date).length;
-            return realCount > 0 ? realCount : fakeData[i];
-        });
+                    const fakeData = [12, 18, 15, 22, 28, 20, 25];
+                    const counts = last7Days.map((date, i) => {
+                        const realCount = appts.filter(a => a.appointmentDate === date).length;
+                        return realCount > 0 ? realCount : fakeData[i];
+                    });
 
-        const maxCount = Math.max(...counts, 10);
-        const chartContainer = document.querySelector('.h-48.flex.items-end');
-        const daysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        
-        if (chartContainer) {
-            chartContainer.innerHTML = last7Days.map((date, i) => {
-                const d = new Date(date);
-                const dayName = daysShort[d.getDay()];
-                const height = (counts[i] / maxCount) * 100;
-                const isToday = date === today.toISOString().split('T')[0];
-                const opacity = isToday ? '' : '/70';
-                const color = isToday ? 'bg-primary' : 'bg-primary-container';
-                
-                return `<div class="flex-1 flex flex-col items-center gap-1 group relative">
+                    const maxCount = Math.max(...counts, 10);
+                    const chartContainer = document.querySelector('.h-48.flex.items-end');
+                    const daysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+                    if (chartContainer) {
+                        chartContainer.innerHTML = last7Days.map((date, i) => {
+                            const d = new Date(date);
+                            const dayName = daysShort[d.getDay()];
+                            const height = (counts[i] / maxCount) * 100;
+                            const isToday = date === today.toISOString().split('T')[0];
+                            const opacity = isToday ? '' : '/70';
+                            const color = isToday ? 'bg-primary' : 'bg-primary-container';
+
+                            return `<div class="flex-1 flex flex-col items-center gap-1 group relative">
                     <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-on-background text-background text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-20 font-bold">${counts[i]} Visits</div>
                     <div class="w-full rounded-t-lg ${color}${opacity} transition-all duration-700 ease-out hover:brightness-110 cursor-pointer shadow-sm" style="height:${height}%"></div>
                     <span class="text-[10px] font-bold text-outline uppercase tracking-tighter mt-1">${dayName}</span>
                 </div>`;
-            }).join('');
-        }
-    } catch (e) { console.error('Chart final error:', e); }
+                        }).join('');
+                    }
+                } catch (e) { console.error('Chart final error:', e); }
 
-    // Update header with tenant name
-    const user = HMS.getUser();
-    if (user && user.tenantName) {
-        const h1 = document.querySelector('header h1');
-        if (h1) h1.textContent = user.tenantName;
-    }
-});
-</script>
-</body></html>
+                // Update header with tenant name
+                const user = HMS.getUser();
+                if (user && user.tenantName) {
+                    const h1 = document.querySelector('header h1');
+                    if (h1) h1.textContent = user.tenantName;
+                }
+            });
+        </script>
+</body>
+
+</html>
