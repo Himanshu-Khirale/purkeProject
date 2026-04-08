@@ -1,13 +1,10 @@
 # Stage 1: Build Backend (Java/Maven)
-FROM eclipse-temurin:17-jdk-alpine AS backend-build
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS backend-build
 WORKDIR /app
 COPY hms-backend/pom.xml .
-COPY hms-backend/.mvn .mvn
-COPY hms-backend/mvnw .
-RUN chmod +x mvnw
-RUN ./mvnw dependency:go-offline -B
+RUN mvn dependency:go-offline -B
 COPY hms-backend/src src
-RUN ./mvnw package -DskipTests -B
+RUN mvn package -DskipTests -B
 
 # Final Stage: Unified Container
 FROM eclipse-temurin:17-jre-alpine
